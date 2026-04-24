@@ -1,263 +1,258 @@
 {
-    "1": {
-        "id": 1,
+    "WorkflowBlueprint": {
+        "id": "31",
+        "uuid": "6f6b3ba0-0c31-4589-8468-7f0b741e367f",
         "name": "Revisar Falsos Positivos",
-        "data": {
-            "id": "adhoc_3",
-            "scope": "adhoc",
-            "name": "Revisar Falsos Positivos",
-            "description": "Revisar todos los IOCs frente a las warninglists activadas en el MISP, sacar el tag 'to_ids' y marcarlo como Falso Positivo con un tag.",
-            "icon": "hand-pointer",
-            "inputs": 0,
-            "outputs": 1,
-            "blocking": false,
-            "misp_core_format": true,
-            "is_misp_module": false,
-            "is_custom": false,
-            "expect_misp_core_format": false,
-            "version": "0.1",
-            "icon_class": "",
-            "multiple_output_connection": false,
-            "support_filters": false,
-            "saved_filters": {
-                "selector": "",
-                "value": "",
-                "operator": "",
-                "path": ""
-            },
-            "module_type": "trigger",
-            "html_template": "trigger",
-            "is_adhoc": true,
-            "node_uid": "vw0c98e0gnxt2r",
-            "indexed_params": {
-                "scope": "passed_event_ids",
-                "filters": "{}"
-            },
-            "previous_module_version": "0.1",
-            "module_version": "0.1"
-        },
-        "class": "block-type-trigger disabled",
-        "typenode": false,
-        "inputs": [],
-        "outputs": {
-            "output_1": {
-                "connections": [
-                    {
-                        "node": "2",
-                        "output": "input_1"
-                    }
-                ]
-            }
-        },
-        "pos_x": -1209.0526315789473,
-        "pos_y": -39
-    },
-    "2": {
-        "id": 2,
-        "name": "Attach warninglist",
-        "data": {
-            "node_uid": "w10namv8gqu5sj",
-            "indexed_params": {
-                "warninglists": [
-                    "ALL"
-                ]
-            },
-            "saved_filters": {
-                "selector": "",
-                "value": "",
-                "operator": "",
-                "path": ""
-            },
-            "module_type": "action",
-            "id": "attach-warninglist",
-            "name": "Attach warninglist",
-            "multiple_output_connection": false,
-            "previous_module_version": "0.2",
-            "module_version": "0.2"
-        },
-        "class": "block-type-default expect-misp-core-format",
-        "typenode": false,
-        "inputs": {
-            "input_1": {
-                "connections": [
-                    {
-                        "node": "1",
-                        "input": "output_1"
-                    }
-                ]
-            }
-        },
-        "outputs": {
-            "output_1": {
-                "connections": [
-                    {
-                        "node": "3",
-                        "output": "input_1"
-                    }
-                ]
-            }
-        },
-        "pos_x": -786,
-        "pos_y": -24.05263157894737
-    },
-    "3": {
-        "id": 3,
-        "name": "Filter :: Generic",
-        "data": {
-            "node_uid": "w40jtmctdyf19i",
-            "indexed_params": {
-                "filtering-label": "A",
-                "selector": "Event._AttributeFlattened.{n}",
-                "value": "false_positive",
-                "value_list": [],
-                "operator": "in",
-                "hash_path": "warnings.{n}.warninglist_category"
-            },
-            "saved_filters": {
-                "selector": "",
-                "value": "",
-                "operator": "",
-                "path": ""
-            },
-            "module_type": "logic",
-            "id": "generic-filter-data",
-            "name": "Filter :: Generic",
-            "multiple_output_connection": false,
-            "previous_module_version": "0.2",
-            "module_version": "0.2"
-        },
-        "class": "block-type-default block-type-logic",
-        "typenode": false,
-        "inputs": {
-            "input_1": {
-                "connections": [
-                    {
-                        "node": "2",
-                        "input": "output_1"
-                    }
-                ]
-            }
-        },
-        "outputs": {
-            "output_1": {
-                "connections": [
-                    {
-                        "node": "4",
-                        "output": "input_1"
-                    }
-                ]
-            }
-        },
-        "pos_x": -1093.9473684210527,
-        "pos_y": 187
-    },
-    "4": {
-        "id": 4,
-        "name": "Attribute IDS Flag operation",
-        "data": {
-            "node_uid": "33g0uo42x4zcti",
-            "indexed_params": {
-                "action": "remove"
-            },
-            "saved_filters": {
-                "selector": "",
-                "value": "",
-                "operator": "",
-                "path": ""
-            },
-            "module_type": "action",
-            "id": "attribute_ids_flag_operation",
-            "name": "Attribute IDS Flag operation",
-            "multiple_output_connection": false,
-            "previous_module_version": "?",
-            "module_version": "0.2"
-        },
-        "class": "block-type-default expect-misp-core-format",
-        "typenode": false,
-        "inputs": {
-            "input_1": {
-                "connections": [
-                    {
-                        "node": "3",
-                        "input": "output_1",
-                        "labels": [
+        "description": "Revisar todos los IOCs frente a las warninglists activadas en el MISP, sacar el tag 'to_ids' y marcarlo como Falso Positivo con un tag.",
+        "timestamp": "1777004856",
+        "default": false,
+        "data": [
+            {
+                "id": 1,
+                "name": "Ad-Hoc Trigger Adhoc 4",
+                "data": {
+                    "id": "adhoc_4",
+                    "scope": "adhoc",
+                    "name": "Ad-Hoc Trigger Adhoc 4",
+                    "description": "Ad-Hoc trigger to be called manually",
+                    "icon": "hand-pointer",
+                    "inputs": 0,
+                    "outputs": 1,
+                    "blocking": false,
+                    "misp_core_format": true,
+                    "is_misp_module": false,
+                    "is_custom": false,
+                    "expect_misp_core_format": false,
+                    "version": "0.1",
+                    "icon_class": "",
+                    "multiple_output_connection": false,
+                    "support_filters": false,
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "trigger",
+                    "html_template": "trigger",
+                    "is_adhoc": true,
+                    "node_uid": "15i0qnbgbkbjzf",
+                    "indexed_params": {
+                        "scope": "passed_event_ids",
+                        "filters": "{}"
+                    },
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-trigger",
+                "typenode": false,
+                "inputs": [],
+                "outputs": {
+                    "output_1": {
+                        "connections": [
                             {
-                                "id": "a",
-                                "name": "A",
-                                "variant": "info"
+                                "node": "2",
+                                "output": "input_1"
                             }
                         ]
                     }
-                ]
-            }
-        },
-        "outputs": {
-            "output_1": {
-                "connections": [
-                    {
-                        "node": "5",
-                        "output": "input_1"
-                    }
-                ]
-            }
-        },
-        "pos_x": -631,
-        "pos_y": 305.05263157894734
-    },
-    "5": {
-        "id": 5,
-        "name": "Tag operation",
-        "data": {
-            "node_uid": "kuc0ertd9f7dnsp",
-            "indexed_params": {
-                "scope": "attribute",
-                "action": "add",
-                "locality": "local",
-                "tags": [
-                    "FalsoPositivo"
-                ],
-                "clusters": []
+                },
+                "pos_x": -653.5263157894736,
+                "pos_y": 30.94736842105263
             },
-            "saved_filters": {
-                "selector": "",
-                "value": "",
-                "operator": "",
-                "path": ""
-            },
-            "module_type": "action",
-            "id": "tag_operation",
-            "name": "Tag operation",
-            "multiple_output_connection": false,
-            "previous_module_version": "?",
-            "module_version": "0.2"
-        },
-        "class": "block-type-default expect-misp-core-format",
-        "typenode": false,
-        "inputs": {
-            "input_1": {
-                "connections": [
-                    {
-                        "node": "4",
-                        "input": "output_1",
-                        "labels": [
+            {
+                "id": 2,
+                "name": "Attach warninglist",
+                "data": {
+                    "node_uid": "15n05kn90u8kik",
+                    "indexed_params": {
+                        "warninglists": [
+                            "ALL"
+                        ]
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "action",
+                    "id": "attach-warninglist",
+                    "name": "Attach warninglist",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.2",
+                    "module_version": "0.2"
+                },
+                "class": "block-type-default expect-misp-core-format",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
                             {
-                                "id": "a",
-                                "name": "A",
-                                "variant": "info"
+                                "node": "1",
+                                "input": "output_1"
                             }
                         ]
                     }
-                ]
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "3",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -222.94741981907885,
+                "pos_y": 17.80702289782073
+            },
+            {
+                "id": 3,
+                "name": "Filter :: Generic",
+                "data": {
+                    "node_uid": "15p0o86csb3u15a",
+                    "indexed_params": {
+                        "filtering-label": "A",
+                        "selector": "Event._AttributeFlattened.{n}",
+                        "value": "false_positive",
+                        "value_list": [],
+                        "operator": "in",
+                        "hash_path": "warnings.{n}.warninglist_category"
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "logic",
+                    "id": "generic-filter-data",
+                    "name": "Filter :: Generic",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.2",
+                    "module_version": "0.2"
+                },
+                "class": "block-type-default block-type-logic",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "2",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "5",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -507.94736842105266,
+                "pos_y": 271
+            },
+            {
+                "id": 5,
+                "name": "Attribute IDS Flag operation",
+                "data": {
+                    "node_uid": "15v0v9u3y8d8rro",
+                    "indexed_params": {
+                        "action": "remove"
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "action",
+                    "id": "attribute_ids_flag_operation",
+                    "name": "Attribute IDS Flag operation",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.2",
+                    "module_version": "0.2"
+                },
+                "class": "block-type-default expect-misp-core-format",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "3",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "6",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -69.94736842105263,
+                "pos_y": 356
+            },
+            {
+                "id": 6,
+                "name": "Tag operation",
+                "data": {
+                    "node_uid": "15x0oq0lq1fjerq",
+                    "indexed_params": {
+                        "scope": "attribute",
+                        "action": "add",
+                        "locality": "local",
+                        "tags": [
+                            "FalsoPositivo"
+                        ],
+                        "clusters": []
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "action",
+                    "id": "tag_operation",
+                    "name": "Tag operation",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.2",
+                    "module_version": "0.2"
+                },
+                "class": "block-type-default expect-misp-core-format",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "5",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": []
+                    }
+                },
+                "pos_x": 369.7894736842105,
+                "pos_y": 225
             }
-        },
-        "outputs": {
-            "output_1": {
-                "connections": []
-            }
-        },
-        "pos_x": -175,
-        "pos_y": 176
-    },
-    "_frames": []
+        ],
+        "mermaid": "flowchart LR\n    1{{\"fas:fa-hand-pointer  Ad-Hoc Trigger Adhoc 4\"}} --> 2[\"fas:fa-exclamation-triangle  Attach warninglist\"]\n    2[\"fas:fa-exclamation-triangle  Attach warninglist\"] --> 3[/\"fas:fa-filter  Filter :: Generic\"/]\n    3[/\"fas:fa-filter  Filter :: Generic\"/] --> 5[\"fas:fa-edit  Attribute IDS Flag operation\"]\n    5[\"fas:fa-edit  Attribute IDS Flag operation\"] --> 6[\"fas:fa-tags  Tag operation\"]\n"
+    }
 }
-
