@@ -1,0 +1,317 @@
+{
+    "WorkflowBlueprint": {
+        "id": "32",
+        "uuid": "246e3de7-f430-41dd-a88a-518969890284",
+        "name": "Agregar información de evento a EDL",
+        "description": "Agrega la información del evento que está siendo publicado a un directorio en el webroot con todas las listas dinamicas de IOCs que se necesitan.",
+        "timestamp": "1777005183",
+        "default": false,
+        "data": [
+            {
+                "id": 1,
+                "name": "Ad-Hoc Trigger Adhoc 3",
+                "data": {
+                    "id": "adhoc_3",
+                    "scope": "adhoc",
+                    "name": "Ad-Hoc Trigger Adhoc 3",
+                    "description": "Ad-Hoc trigger to be called manually",
+                    "icon": "hand-pointer",
+                    "inputs": 0,
+                    "outputs": 1,
+                    "blocking": false,
+                    "misp_core_format": true,
+                    "is_misp_module": false,
+                    "is_custom": false,
+                    "expect_misp_core_format": false,
+                    "version": "0.1",
+                    "icon_class": "",
+                    "multiple_output_connection": false,
+                    "support_filters": false,
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "trigger",
+                    "html_template": "trigger",
+                    "is_adhoc": true,
+                    "node_uid": "1sb6011tlvcl9fsg",
+                    "indexed_params": {
+                        "scope": "passed_event_ids",
+                        "filters": "{}"
+                    },
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-trigger",
+                "typenode": false,
+                "inputs": [],
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "2",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -958,
+                "pos_y": -90.94782028405116
+            },
+            {
+                "id": 2,
+                "name": "Dump IOC to File",
+                "data": {
+                    "node_uid": "1sb80t3lcwdg6xoo",
+                    "indexed_params": {
+                        "filename": "full_ips",
+                        "base_folder": "/var/www/MISP/app/webroot/edl/",
+                        "ioc_filter": [
+                            "ip-src",
+                            "ip-dst"
+                        ],
+                        "append_data": true
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "action",
+                    "id": "dump-2-file",
+                    "name": "Dump IOC to File",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-default",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "1",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "3",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -608.4894318749375,
+                "pos_y": -81
+            },
+            {
+                "id": 3,
+                "name": "Dump IOC to File",
+                "data": {
+                    "node_uid": "1sbd0qm9i1q2c0o8",
+                    "indexed_params": {
+                        "filename": "domains",
+                        "base_folder": "/var/www/MISP/app/webroot/edl/",
+                        "ioc_filter": [
+                            "domain"
+                        ],
+                        "append_data": true
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "module_type": "action",
+                    "id": "dump-2-file",
+                    "name": "Dump IOC to File",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-default",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "2",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "4",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -223.27080579544318,
+                "pos_y": -76
+            },
+            {
+                "id": 4,
+                "name": "Dump IOC to File",
+                "data": {
+                    "indexed_params": {
+                        "filename": "md5",
+                        "base_folder": "/var/www/MISP/app/webroot/edl/",
+                        "ioc_filter": [
+                            "md5"
+                        ],
+                        "append_data": true
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "node_uid": "1sbf0x5qojqigt9",
+                    "module_type": "action",
+                    "id": "dump-2-file",
+                    "name": "Dump IOC to File",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-default",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "3",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "5",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -795.5416115908864,
+                "pos_y": 230.1354028977216
+            },
+            {
+                "id": 5,
+                "name": "Dump IOC to File",
+                "data": {
+                    "indexed_params": {
+                        "filename": "sha1",
+                        "base_folder": "/var/www/MISP/app/webroot/edl/",
+                        "ioc_filter": [
+                            "sha1"
+                        ],
+                        "append_data": true
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "node_uid": "1sbi0t16pqtnuzhr",
+                    "module_type": "action",
+                    "id": "dump-2-file",
+                    "name": "Dump IOC to File",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-default",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "4",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": [
+                            {
+                                "node": "6",
+                                "output": "input_1"
+                            }
+                        ]
+                    }
+                },
+                "pos_x": -393.8645971022784,
+                "pos_y": 232.8645971022784
+            },
+            {
+                "id": 6,
+                "name": "Dump IOC to File",
+                "data": {
+                    "indexed_params": {
+                        "filename": "sha256",
+                        "base_folder": "/var/www/MISP/app/webroot/edl/",
+                        "ioc_filter": [
+                            "sha256"
+                        ],
+                        "append_data": true
+                    },
+                    "saved_filters": {
+                        "selector": "",
+                        "value": "",
+                        "operator": "",
+                        "path": ""
+                    },
+                    "node_uid": "1sbl0s2t1wl35ly",
+                    "module_type": "action",
+                    "id": "dump-2-file",
+                    "name": "Dump IOC to File",
+                    "multiple_output_connection": false,
+                    "previous_module_version": "0.1",
+                    "module_version": "0.1"
+                },
+                "class": "block-type-default",
+                "typenode": false,
+                "inputs": {
+                    "input_1": {
+                        "connections": [
+                            {
+                                "node": "5",
+                                "input": "output_1"
+                            }
+                        ]
+                    }
+                },
+                "outputs": {
+                    "output_1": {
+                        "connections": []
+                    }
+                },
+                "pos_x": 0,
+                "pos_y": 232
+            }
+        ],
+        "mermaid": "flowchart LR\n    1{{\"fas:fa-hand-pointer  Ad-Hoc Trigger Adhoc 3\"}} --> 2[\"Dump IOC to File\"]\n    2[\"Dump IOC to File\"] --> 3[\"Dump IOC to File\"]\n    3[\"Dump IOC to File\"] --> 4[\"Dump IOC to File\"]\n    4[\"Dump IOC to File\"] --> 5[\"Dump IOC to File\"]\n    5[\"Dump IOC to File\"] --> 6[\"Dump IOC to File\"]\n"
+    }
+}
