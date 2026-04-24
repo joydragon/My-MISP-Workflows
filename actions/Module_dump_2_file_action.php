@@ -47,7 +47,12 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
                 'default' => [],
                 'placeholder' => __('Pick the IOC Filter (optional)')
             ],
-
+            [
+                'id' => 'append_data',
+                'label' => __('Append Data'),
+                'type' => 'checkbox',
+                'default' => false,
+            ],
         ];
     }
 
@@ -124,11 +129,13 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
 		mkdir($params['base_folder']['value'], 0755, true);
 	    }
 	}
+
+	$append = $params["append_data"]["value"];
 	$file_path = $params['base_folder']['value'] . $params['filename']['value'];
-	unlink($file_path);
 	$filter = $params['ioc_filter']['value'];
 
 	file_put_contents("/tmp/dump_data.log",print_r("Ahora si entramos, porque tenemos payload.\n\n", true));
+	file_put_contents("/tmp/dump_data.log",print_r($params, true), FILE_APPEND);
 
         $payload = '';
         if (isset($params['payload']) && strlen($params['payload']['value']) > 0) {
@@ -139,8 +146,29 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
 	    file_put_contents("/tmp/dump_data.log",print_r($temp, true), FILE_APPEND);
 	    $payload = $this->mergeData($payload, $temp);
         }
+	if($append){
+	# Si hay que agregar datos y deduplicar
+	    file_put_contents("/tmp/dump_data.log","Deduplicando! \n", FILE_APPEND);
+            $base_payload = [];
+	    $handle = fopen($file_path, "r");
+	    while (($line = fgets($handle)) !== false) {
+	        if($line != ""){
+	            $base_payload[] = trim($line);
+		}
+	    }
+	    fclose($handle);
+	    $result = [...$base_payload, ...$payload];
+	    $payload = array_unique($result);
+	    sort($payload);
+	    file_put_contents("/tmp/dump_data.log",print_r($payload, true), FILE_APPEND);
+	}
+	
+	# Se elimina lo anterior para agregar lo deduplicado (o no).
+	if(is_file($file_path)){
+	    unlink($file_path);
+	}
 	foreach($payload as $ioc){
-	    file_put_contents($file_path,print_r($ioc, true) . "\n", FILE_APPEND);
+	    file_put_contents($file_path, print_r($ioc, true) . "\n", FILE_APPEND);
 	}
 	return false;
     }
