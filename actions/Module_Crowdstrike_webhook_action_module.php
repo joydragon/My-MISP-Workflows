@@ -63,36 +63,7 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
                 'default' => ["domain", "md5", "sha256"],
                 'placeholder' => __('Pick the IOC Filter (optional)')
             ],
-            [
-                'id' => 'content_type',
-                'label' => __('Content type'),
-                'type' => 'select',
-                'default' => 'json',
-                'options' => [
-                    'json' => 'application/json',
-                    'form' => 'application/x-www-form-urlencoded',
-                ],
-            ],
-            [
-                'id' => 'request_method',
-                'label' => __('HTTP Request Method'),
-                'type' => 'select',
-                'default' => 'post',
-                'options' => [
-                    'post' => 'POST'
-                ],
-            ],
-            [
-                'id' => 'self_signed',
-                'label' => __('Self-signed certificates'),
-                'type' => 'select',
-                'default' => 'deny',
-                'options' => [
-                    'deny' => 'Deny self-signed certificates',
-                    'allow' => 'Allow self-signed certificates',
-                ],
-            ],
-        ];
+	]
     }
 
     private function getOnlineToken($params){
@@ -101,7 +72,8 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
 	$client_secret = $params["client_secret"]["value"];
 	$headers["Authorization"] = "Basic ".base64_encode($client_id.":".$client_secret);
 	$requestMethod = "post";
-        $selfSignedAllowed = isset($params['self_signed']) ? $params['self_signed']['value'] == 'allow' : true;
+	$selfSignedAllowed = false;
+
         $response = $this->doRequest($url, "form", NULL, $headers, $requestMethod, ['self_signed' => $selfSignedAllowed]);
 	if($response->isOk()){
 	    $time = time();
@@ -155,9 +127,9 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
         }
         $rData = $roamingData->getData();
         $params = $this->getParamsWithValues($node, $rData);
-	file_put_contents("/tmp/dump_data_CS.log",print_r("Iniciando el EXEC.", true));
-	file_put_contents("/tmp/dump_data_CS.log",print_r($params, true), FILE_APPEND);
-	file_put_contents("/tmp/dump_data_CS.log",print_r($rData, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_CS.log",print_r("Iniciando el EXEC.", true));
+//	file_put_contents("/tmp/dump_data_CS.log",print_r($params, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_CS.log",print_r($rData, true), FILE_APPEND);
         if (empty($params['base_domain']['value'])) {
             $errors[] = __('Base Domain not provided.');
             return false;
@@ -172,7 +144,7 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
 	}
 
 	$token = $this->checkToken($params);
-	file_put_contents("/tmp/dump_data_CS.log",print_r($token, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_CS.log",print_r($token, true), FILE_APPEND);
 	
 	if(!$token){
 	    return false;
@@ -187,7 +159,7 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
 	    return false;
 	}
 	
-	file_put_contents("/tmp/dump_data_CS.log",print_r($iocs, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_CS.log",print_r($iocs, true), FILE_APPEND);
 	$full_payload = [
 		"comment" => "IOC extraido de evento " . $payload["Event"]["id"] . " de MISP.",
 		"ignore_warnings" => true,
@@ -212,13 +184,14 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
 	    }
 	}
 
-	file_put_contents("/tmp/dump_data_CS.log",print_r($full_payload, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_CS.log",print_r($full_payload, true), FILE_APPEND);
 
 	$headers = [];
         $headers["Authorization"] = "Bearer " . $token["access_token"];
-        $selfSignedAllowed = isset($params['self_signed']) ? $params['self_signed']['value'] == 'allow' : true;
-        $requestMethod = isset($params['request_method']) ? $params['request_method']['value'] : 'post';
-        $contentType = isset($params['content_type']) ? $params['content_type']['value'] : 'json';
+	$selfSignedAllowed false;
+	$requestMethod = "post";
+	$contentType = "json";
+	
         try {
 	    $full_url = "https://".$params["base_domain"]["value"]."/iocs/entities/indicators/v1";
             $response = $this->doRequest($full_url, $contentType, $full_payload, $headers, $requestMethod, ['self_signed' => $selfSignedAllowed]);
@@ -226,17 +199,17 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
                 return true;
             }
 	    if ($response->code === 400) {
-		    file_put_contents("/tmp/dump_data_CS.log","Tenemos algunos errores que vamos a intentar resolver.\n", FILE_APPEND);
-		    file_put_contents("/tmp/dump_data_CS.log",print_r($response, true), FILE_APPEND);
+//		    file_put_contents("/tmp/dump_data_CS.log","Tenemos algunos errores que vamos a intentar resolver.\n", FILE_APPEND);
+//		    file_put_contents("/tmp/dump_data_CS.log",print_r($response, true), FILE_APPEND);
 		    $res = $this->limpiarPayload($full_payload, $response);
 
-		    file_put_contents("/tmp/dump_data_CS.log","Finalmente quedamos con.\n", FILE_APPEND);
-		    file_put_contents("/tmp/dump_data_CS.log",print_r($res, true), FILE_APPEND);
+//		    file_put_contents("/tmp/dump_data_CS.log","Finalmente quedamos con.\n", FILE_APPEND);
+//		    file_put_contents("/tmp/dump_data_CS.log",print_r($res, true), FILE_APPEND);
 		    if(!$res){
 		    	return false;
 		    }
 		    $response = $this->doRequest($full_url, $contentType, $full_payload, $headers, $requestMethod, ['self_signed' => $selfSignedAllowed]);
-		    file_put_contents("/tmp/dump_data_CS.log",print_r($res, true), FILE_APPEND);
+//		    file_put_contents("/tmp/dump_data_CS.log",print_r($res, true), FILE_APPEND);
 	    }
             if ($response->code === 403 || $response->code === 401) {
                 $errors[] = __('Authentication failed.');
