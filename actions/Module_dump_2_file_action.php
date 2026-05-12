@@ -134,8 +134,8 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
 	$file_path = $params['base_folder']['value'] . $params['filename']['value'];
 	$filter = $params['ioc_filter']['value'];
 
-	file_put_contents("/tmp/dump_data.log",print_r("Ahora si entramos, porque tenemos payload.\n\n", true));
-	file_put_contents("/tmp/dump_data.log",print_r($params, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data.log",print_r("Ahora si entramos, porque tenemos payload.\n\n", true));
+//	file_put_contents("/tmp/dump_data.log",print_r($params, true), FILE_APPEND);
 
         $payload = '';
         if (isset($params['payload']) && strlen($params['payload']['value']) > 0) {
@@ -143,12 +143,12 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
 	} else {
 	    $payload = [];
 	    $temp = $this->getOnlyDataFromEventList($rData, $filter);
-	    file_put_contents("/tmp/dump_data.log",print_r($temp, true), FILE_APPEND);
+//	    file_put_contents("/tmp/dump_data.log",print_r($temp, true), FILE_APPEND);
 	    $payload = $this->mergeData($payload, $temp);
         }
 	if($append){
 	# Si hay que agregar datos y deduplicar
-	    file_put_contents("/tmp/dump_data.log","Deduplicando! \n", FILE_APPEND);
+//	    file_put_contents("/tmp/dump_data.log","Deduplicando! \n", FILE_APPEND);
             $base_payload = [];
 	    $handle = fopen($file_path, "r");
 	    while (($line = fgets($handle)) !== false) {
@@ -160,7 +160,7 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
 	    $result = [...$base_payload, ...$payload];
 	    $payload = array_unique($result);
 	    sort($payload);
-	    file_put_contents("/tmp/dump_data.log",print_r($payload, true), FILE_APPEND);
+//	    file_put_contents("/tmp/dump_data.log",print_r($payload, true), FILE_APPEND);
 	}
 	
 	# Se elimina lo anterior para agregar lo deduplicado (o no).
