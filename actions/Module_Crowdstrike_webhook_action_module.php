@@ -63,7 +63,7 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
                 'default' => ["domain", "md5", "sha256"],
                 'placeholder' => __('Pick the IOC Filter (optional)')
             ],
-	]
+	];
     }
 
     private function getOnlineToken($params){
