@@ -62,35 +62,6 @@ class Module_SecureAccess_webhook_action_module extends Module_clean_webhook_act
                 'default' => ["domain"],
                 'placeholder' => __('Pick the IOC Filter (optional)')
             ],
-            [
-                'id' => 'content_type',
-                'label' => __('Content type'),
-                'type' => 'select',
-                'default' => 'json',
-                'options' => [
-                    'json' => 'application/json',
-                    'form' => 'application/x-www-form-urlencoded',
-                ],
-            ],
-            [
-                'id' => 'request_method',
-                'label' => __('HTTP Request Method'),
-                'type' => 'select',
-                'default' => 'post',
-                'options' => [
-                    'post' => 'POST'
-                ],
-            ],
-            [
-                'id' => 'self_signed',
-                'label' => __('Self-signed certificates'),
-                'type' => 'select',
-                'default' => 'deny',
-                'options' => [
-                    'deny' => 'Deny self-signed certificates',
-                    'allow' => 'Allow self-signed certificates',
-                ],
-            ],
         ];
     }
 
@@ -137,9 +108,9 @@ class Module_SecureAccess_webhook_action_module extends Module_clean_webhook_act
         }
         $rData = $roamingData->getData();
         $params = $this->getParamsWithValues($node, $rData);
-	file_put_contents("/tmp/dump_data_SA.log",print_r("Iniciando el EXEC.", true));
-	file_put_contents("/tmp/dump_data_SA.log",print_r($params, true), FILE_APPEND);
-	file_put_contents("/tmp/dump_data_SA.log",print_r($rData, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_SA.log",print_r("Iniciando el EXEC.", true));
+//	file_put_contents("/tmp/dump_data_SA.log",print_r($params, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_SA.log",print_r($rData, true), FILE_APPEND);
         if (empty($params['url']['value'])) {
             $errors[] = __('URL not provided.');
             return false;
@@ -164,7 +135,7 @@ class Module_SecureAccess_webhook_action_module extends Module_clean_webhook_act
 	}
 
 	$token = $this->checkToken($params);
-	file_put_contents("/tmp/dump_data_SA.log",print_r($token, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_SA.log",print_r($token, true), FILE_APPEND);
 
 	$filter = $params["ioc_filter"]["value"];
 
@@ -175,7 +146,7 @@ class Module_SecureAccess_webhook_action_module extends Module_clean_webhook_act
 	    return false;
 	}
 	
-	file_put_contents("/tmp/dump_data_SA.log",print_r($iocs, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_SA.log",print_r($iocs, true), FILE_APPEND);
 	$full_payload = [];
 	foreach($iocs as $i){
 	    $full_payload[] = [
@@ -184,13 +155,15 @@ class Module_SecureAccess_webhook_action_module extends Module_clean_webhook_act
 	    ];
 	}
 
-	file_put_contents("/tmp/dump_data_SA.log",print_r($full_payload, true), FILE_APPEND);
+//	file_put_contents("/tmp/dump_data_SA.log",print_r($full_payload, true), FILE_APPEND);
 	
 	$headers = [];
         $headers["Authorization"] = "Bearer " . $token["access_token"];
-        $selfSignedAllowed = isset($params['self_signed']) ? $params['self_signed']['value'] == 'allow' : true;
-        $requestMethod = isset($params['request_method']) ? $params['request_method']['value'] : 'post';
-        $contentType = isset($params['content_type']) ? $params['content_type']['value'] : 'json';
+	
+	$selfSignedAllowed = false;
+	$requestMethod = "post";
+	$contentType = "json";
+
         try {
 	    $full_url = $params['url']['value'].$pid."/destinations";
             $response = $this->doRequest($full_url, $contentType, $full_payload, $headers, $requestMethod, ['self_signed' => $selfSignedAllowed]);
