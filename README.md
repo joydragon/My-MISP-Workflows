@@ -24,7 +24,7 @@ Por lo anterior estamos compartiendo los siguientes blueprints:
 
 - [Revisar Falso Positivo](RevisarFalsoPositivo.json)
 
-![Revisar Falso Positivo](RevisarFalsoPositivo.png?raw=true "Revisar Falso Positivo")
+![Revisar Falso Positivo](RevisarFalsoPositivo.png "Revisar Falso Positivo")
 
 Este flujo busca simplemente contrastar los IOCs cargados con la listas blancas que tengas activado en el MISP (muy recomendado) y desactivar el toggle "to_ids" de los que calcen, y además marcarlos con un tag de "FalsoPositivo".
 
@@ -32,7 +32,7 @@ Esta es una buena práctica que se recomienda realizar tanto para un MISP que se
 
 - [Agregar Información a EDL](AgregarInformacionEDL.json)
 
-![Agregar Informacion a EDL](AgregarInformacionEDL.png?raw=true "Agregar Informacion a EDL")
+![Agregar Informacion a EDL](AgregarInformacionEDL.png "Agregar Informacion a EDL")
 
 Este flujo lo que busca es que se agreguen los IOCs que necesitemos a unos archivos de texto que se van a usar como listas dinámicas (EDL o ETL). Estas listas se usan principalmente en Firewalls que quieren bloquear IPs o dominios, pero pueden ser útiles en multitud de herramientas.
 
