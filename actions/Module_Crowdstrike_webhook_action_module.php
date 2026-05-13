@@ -188,7 +188,7 @@ class Module_Crowdstrike_webhook_action_module extends Module_clean_webhook_acti
 
 	$headers = [];
         $headers["Authorization"] = "Bearer " . $token["access_token"];
-	$selfSignedAllowed false;
+	$selfSignedAllowed = false;
 	$requestMethod = "post";
 	$contentType = "json";
 	
