@@ -10,7 +10,7 @@ class Module_dump_2_file_action extends WorkflowBaseActionModule
     public $name = 'Dump IOC to File';
     public $version = '0.1';
     public $description = '';
-    public $icon_path = 'webhook.png';
+    public $icon = 'download';
     public $inputs = 1;
     public $outputs = 1;
     public $support_filters = true;
